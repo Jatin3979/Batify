@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
   },
   isadmin: Boolean,
   orders: {
-    typeof: Array,
+    type: Array,
     default: [],
   },
   contact: Number,
