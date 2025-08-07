@@ -1,14 +1,25 @@
+const mongoose = require("mongoose");
+
 const productSchema = mongoose.Schema({
-  image:String,
-  name:String,
-  price:Number,
-  discount:{
-    type:Number,
-    default:0
+  image: Buffer,
+  name: String,
+  price: Number,
+  discount: {
+    type: Number,
+    default: 0,
   },
-  bgcolor:String,
-  panelcolor:String,
-  textcolor:String,
+  bgcolor: {
+    type: String,
+    default: "#f9fafb", 
+  },
+  panelcolor: {
+    type: String,
+    default: "#6b737aff", 
+  },
+  textcolor: {
+    type: String,
+    default: "#111827", 
+  },
 });
 
 module.exports = mongoose.model("product", productSchema);

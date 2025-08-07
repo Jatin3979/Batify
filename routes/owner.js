@@ -1,21 +1,21 @@
 const ownerValidationSchema = require("../validations/owner.validation");
 const ownerModel = require("../models/owner-model");
 var express = require("express");
+const { createProducts } = require("../controllers/ownerController");
+const { isAdmin } = require("../middlewares/isAdmin");
+const productModel = require("../models/product-model");
+const isloggedin = require("../middlewares/isloggedin");
 var router = express.Router();
 /* GET users listing. */
-router.get("/", function (req, res) {
-  res.send("hey");
+router.get("/",isloggedin, isAdmin,async function (req, res) {
+  const products= await productModel.find();
+  console.log(products);
+  res.render("admin",{products});
 });
-if (process.env.NODE_ENV == "development") {
-  router.post("/create", async function (req, res) {
-    const { error } = ownerValidationSchema.validate(req.body);
-    if (error)
-      return res.status(400).json({ message: error.details[0].message });
-    let owners = await ownerModel.find();
-    if (owners.length > 0)
-      return res.status(503).send("Permission Denied: Owner Exists");
-    res.send("all is good")
-  });
-}
+
+
+router.get("/products",isAdmin,createProducts)
+
+
 
 module.exports = router;

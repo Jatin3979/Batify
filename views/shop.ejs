@@ -1,0 +1,98 @@
+<%- include('./partials/header') %>
+
+<!-- Success Alert -->
+<% if (error && error.length > 0) { %>
+  <div class="absolute top-5 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow">
+    <%= error[0] %>
+  </div>
+<% } %>
+
+<% if (success && success.length > 0) { %>
+  <div class="absolute top-5 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow">
+    <%= success[0] %>
+  </div>
+<% } %>
+
+
+<!-- Page Container -->
+<div class="flex flex-col lg:flex-row w-full px-4 lg:px-20 pt-24 pb-10 gap-8">
+  <!-- Sidebar -->
+  <aside class="w-full lg:w-1/4">
+    <!-- Sort Dropdown -->
+    <div class="mb-8">
+      <form action="/shop" class="flex items-center gap-3">
+        <label for="sortby" class="font-semibold">Sort by</label>
+        <select
+          name="sortby"
+          id="sortby"
+          class="border px-3 py-2 rounded w-full lg:w-auto"
+        >
+          <option value="popular">Popular</option>
+          <option value="newest">Newest</option>
+        </select>
+      </form>
+    </div>
+
+    <!-- Categories -->
+    <div class="mb-10">
+      <h3 class="font-semibold mb-3">Categories</h3>
+      <ul class="space-y-2 text-sm text-gray-700">
+        <li><a href="#" class="hover:text-black">New Collection</a></li>
+        <li><a href="#" class="hover:text-black">All Products</a></li>
+        <li><a href="#" class="hover:text-black">Discounted Products</a></li>
+      </ul>
+    </div>
+
+    <!-- Filters -->
+    <div>
+      <h3 class="font-semibold mb-3">Filter by</h3>
+      <ul class="space-y-2 text-sm text-gray-700">
+        <li><a href="#" class="hover:text-black">Availability</a></li>
+        <li><a href="#" class="hover:text-black">Discount</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Product Grid -->
+  <main class="w-full lg:w-3/4">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6"
+    >
+      <% products.forEach(function(product) { %>
+      <div
+        class="border rounded-lg overflow-hidden shadow hover:shadow-md transition"
+      >
+        <!-- Product Image -->
+        <div
+          class="h-52 flex items-center justify-center overflow-hidden"
+        >
+          <img
+            src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+            alt="<%= product.name %>"
+            class="h-44 object-cover h-full"
+          />
+        </div>
+
+        <!-- Product Info -->
+        <div
+          class="bg-gray-800 text-white mt-0.5 px-4 py-3 flex justify-between items-center"
+        >
+          <div>
+            <h3 class="font-semibold"><%= product.name %></h3>
+            <p>₹ <%= product.price %></p>
+          </div>
+          <a
+            href="/addtocart/<%= product._id %>"
+            class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black hover:bg-gray-200"
+            title="Add to cart"
+          >
+            <i class="ri-add-line text-lg"></i>
+          </a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </main>
+</div>
+
+<%- include('./partials/footer') %>

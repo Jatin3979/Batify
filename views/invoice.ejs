@@ -1,0 +1,23 @@
+<%- include('./partials/header') %>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4 pt-24">
+  <div class="w-full max-w-lg bg-white rounded-lg shadow-lg p-8">
+    <h2 class="text-2xl font-bold mb-6 text-center text-green-600">🧾 Payment Invoice</h2>
+
+    <div class="space-y-3 text-sm text-gray-700">
+      <p><strong>Customer Name:</strong> <%= user?.fullname || "Guest" %></p>
+      <p><strong>Email:</strong> <%= user?.email || "Not available" %></p>
+      <p><strong>Payment ID:</strong> <%= payment_id %></p>
+      <p><strong>Order ID:</strong> <%= order_id %></p>
+      <p><strong>Total Amount Paid:</strong> ₹<%= amount %></p>
+      <p><strong>Payment Status:</strong> ✅ Success</p>
+      <p><strong>Date:</strong> <%= date %></p>
+    </div>
+
+    <div class="mt-8 text-center">
+      <a href="/shop" class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/footer') %>

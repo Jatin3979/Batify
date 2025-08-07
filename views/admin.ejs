@@ -1,0 +1,89 @@
+<%- include('./partials/header') %>
+
+<!-- Flash Messages -->
+<% if (error && error.length > 0) { %>
+<div
+  class="fixed top-5 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow z-50"
+>
+  <%= error[0] %>
+</div>
+<% } %> <% if (success && success.length > 0) { %>
+<div
+  class="fixed top-5 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow z-50"
+>
+  <%= success[0] %>
+</div>
+<% } %>
+
+<!-- Page Container -->
+<div class="w-full min-h-screen px-4 lg:px-20 pt-24 pb-10">
+  <!-- Heading -->
+  <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">
+    ⚙️ Admin Panel
+  </h2>
+
+  <!-- Create Button -->
+  <div class="mb-8 text-right">
+    <a
+      href="/owners/products"
+      class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm sm:text-base"
+    >
+      + Create New Product
+    </a>
+  </div>
+
+  <!-- Products Grid -->
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+  >
+    <% products.forEach(function(product) { %>
+    <div
+      class="border rounded-lg overflow-hidden shadow hover:shadow-md transition bg-white"
+    >
+      <!-- Product Image -->
+      <div class="h-52 overflow-hidden flex items-center justify-center">
+        <img
+          src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+          alt="<%= product.name %>"
+          class="h-full object-cover"
+        />
+      </div>
+
+      <!-- Product Info Panel -->
+      <div class="mt-0.5 px-4 py-3 flex flex-col gap-2 bg-gray-200">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="font-semibold text-lg"><%= product.name %></h3>
+            <p class="text-sm">₹ <%= product.price %></p>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-between gap-3 mt-2">
+          <a
+            href="/owners/edit/<%= product._id %>"
+            class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded text-sm font-medium"
+          >
+            ✏️ Edit
+          </a>
+
+          <form
+            action="/owners/delete/<%= product._id %>"
+            method="POST"
+            onsubmit="return confirm('Are you sure you want to delete this product?');"
+          >
+            <button
+              type="submit"
+              class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm font-medium"
+            >
+              🗑️ Delete
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('./partials/footer') %>
