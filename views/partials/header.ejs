@@ -19,12 +19,23 @@
   <% var loggedin = typeof loggedin !== "undefined" ? loggedin : true %>
   <% if (loggedin) { %>
     <div class="flex items-center gap-6 text-gray-700 font-medium text-base">
-      <a href="/shop" class="hover:text-black transition">Shop</a>
+      <a href="/shop" class="hover:text-black transition  ">Shop</a>
       <a href="/cart" class="hover:text-black transition">Cart</a>
-      <a href="#" class="hover:text-black transition">My Account</a>
+      <a href="/users/myaccount" class="hover:text-black transition">My Account</a>
       <a href="/users/logout" class="text-red-600 hover:text-red-700 transition">Logout</a>
     </div>
   <% } %>
+  <% if (error && error.length > 0) { %>
+  <div class="bg-red-500 text-white px-4 py-2 rounded shadow w-fit mx-auto mt-4">
+    <%= error[0] %>
+  </div>
+<% } %>
+
+<% if (success && success.length > 0) { %>
+  <div class="bg-green-500 text-white px-4 py-2 rounded shadow w-fit mx-auto mt-4">
+    <%= success[0] %>
+  </div>
+<% } %>
 </nav>
 
   </body>

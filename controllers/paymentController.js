@@ -77,7 +77,7 @@ module.exports.verifyPayment = async (req, res) => {
     // ✅ Step 6: Redirect to invoice
     return res.json({
       verified: true,
-      redirectUrl: `/payment/invoice?payment_id=${razorpay_payment_id}&order_id=${razorpay_order_id}&amount=${amount / 100}`,
+      redirectUrl: `/payment/invoice?payment_id=${razorpay_payment_id}&order_id=${razorpay_order_id}&amount=${amount}`,
     });
 
   } catch (err) {

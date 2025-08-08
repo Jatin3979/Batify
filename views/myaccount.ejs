@@ -1,0 +1,72 @@
+<%- include('./partials/header') %>
+
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <!-- User Info -->
+  <div class="bg-white shadow-md rounded-lg p-6 mb-10">
+    <h2 class="text-2xl font-bold mb-4">My Account</h2>
+    <p><span class="font-semibold">Name:</span> <%= user.fullname %></p>
+    <p><span class="font-semibold">Email:</span> <%= user.email %></p>
+  </div>
+
+  <!-- Orders Section -->
+  <h3 class="text-xl font-semibold mb-6">My Orders</h3>
+
+  <% if (orders.length === 0) { %>
+  <p class="text-gray-500">You have not placed any orders yet.</p>
+  <% } else { %> <% orders.forEach(function(order) { %>
+  <div class="order-card bg-white border rounded-lg p-5 mb-8 shadow-sm">
+    <!-- Order Info -->
+    <div
+      class="flex flex-col md:flex-row justify-between md:items-center gap-4"
+    >
+      <div>
+        <p><span class="font-semibold">Order ID:</span> <%= order.orderId %></p>
+        <p>
+          <span class="font-semibold">Payment ID:</span> <%= order.paymentId %>
+        </p>
+        <p>
+          <span class="font-semibold">Status:</span>
+          <span
+            class="<%= order.status === 'paid' ? 'text-green-600' : 'text-red-600' %> font-medium"
+          >
+            <%= order.status %>
+          </span>
+        </p>
+        <p>
+          <span class="font-semibold">Date:</span> <%=
+          order.createdAt.toDateString() %>
+        </p>
+        <p>
+          <span class="font-semibold">Total:</span> ₹ <%= order.amount / 100 %>
+        </p>
+      </div>
+
+      <!-- View Invoice Button -->
+      <a
+        href="/payment/invoice?payment_id=<%= order.paymentId %>&order_id=<%= order.orderId %>&amount=<%= order.amount %>"
+        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow"
+        target="_blank"
+      >
+        View Invoice
+      </a>
+    </div>
+
+    <!-- Products in Order -->
+    <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <% order.products.forEach(function(product) { %>
+      <div class="border rounded p-3 flex flex-col items-center">
+        <img
+          src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+          alt="<%= product.name %>"
+          class="w-20 h-20 object-cover rounded"
+        />
+        <p class="text-sm text-center mt-2 font-medium"><%= product.name %></p>
+        <p class="text-xs text-gray-600">₹ <%= product.price %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+  <% }) %> <% } %>
+</div>
+
+<%- include('./partials/footer') %>

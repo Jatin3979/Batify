@@ -1,18 +1,19 @@
 <%- include('./partials/header') %>
 
-<!-- Success Alert -->
+<!-- Alerts -->
 <% if (error && error.length > 0) { %>
-  <div class="absolute top-5 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow">
-    <%= error[0] %>
-  </div>
+<div
+  class="absolute top-5 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow"
+>
+  <%= error[0] %>
+</div>
+<% } %> <% if (success && success.length > 0) { %>
+<div
+  class="absolute top-5 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow"
+>
+  <%= success[0] %>
+</div>
 <% } %>
-
-<% if (success && success.length > 0) { %>
-  <div class="absolute top-5 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow">
-    <%= success[0] %>
-  </div>
-<% } %>
-
 
 <!-- Page Container -->
 <div class="flex flex-col lg:flex-row w-full px-4 lg:px-20 pt-24 pb-10 gap-8">
@@ -33,15 +34,7 @@
       </form>
     </div>
 
-    <!-- Categories -->
-    <div class="mb-10">
-      <h3 class="font-semibold mb-3">Categories</h3>
-      <ul class="space-y-2 text-sm text-gray-700">
-        <li><a href="#" class="hover:text-black">New Collection</a></li>
-        <li><a href="#" class="hover:text-black">All Products</a></li>
-        <li><a href="#" class="hover:text-black">Discounted Products</a></li>
-      </ul>
-    </div>
+    <!-- Removed Categories -->
 
     <!-- Filters -->
     <div>
@@ -55,39 +48,72 @@
 
   <!-- Product Grid -->
   <main class="w-full lg:w-3/4">
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6"
-    >
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
       <% products.forEach(function(product) { %>
       <div
-        class="border rounded-lg overflow-hidden shadow hover:shadow-md transition"
+        class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1 flex flex-col"
       >
         <!-- Product Image -->
         <div
-          class="h-52 flex items-center justify-center overflow-hidden"
+          class="h-60 bg-gray-100 flex items-center justify-center overflow-hidden"
         >
           <img
             src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
             alt="<%= product.name %>"
-            class="h-44 object-cover h-full"
+            class="object-contain h-full"
           />
         </div>
 
         <!-- Product Info -->
-        <div
-          class="bg-gray-800 text-white mt-0.5 px-4 py-3 flex justify-between items-center"
-        >
-          <div>
-            <h3 class="font-semibold"><%= product.name %></h3>
-            <p>₹ <%= product.price %></p>
+        <div class="p-4 flex flex-col flex-grow">
+          <!-- Name -->
+          <h3 class="font-bold text-lg text-gray-800 mb-1">
+            <%= product.name %>
+          </h3>
+
+          <!-- Price & Discount -->
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-blue-600 font-semibold text-lg"
+              >₹ <%= product.price %></span
+            >
+            <% if (product.discount && product.discount > 0) { %>
+            <span class="text-sm text-gray-500 line-through"
+              >₹ <%= (product.price + (product.price * product.discount /
+              100)).toFixed(0) %></span
+            >
+            <span class="text-green-600 text-sm font-medium"
+              ><%= product.discount %>% off</span
+            >
+            <% } %>
           </div>
-          <a
-            href="/addtocart/<%= product._id %>"
-            class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-black hover:bg-gray-200"
-            title="Add to cart"
-          >
-            <i class="ri-add-line text-lg"></i>
-          </a>
+
+          <!-- Short Description -->
+          <% if (product.description) { %>
+          <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+            <%= product.description %>
+          </p>
+          <% } %>
+
+          <!-- Key Details -->
+          <ul class="text-xs text-gray-500 space-y-1 mb-4">
+            <% if (product.weight) { %>
+            <li><strong>Weight:</strong> <%= product.weight %> g</li>
+            <% } %> <% if (product.size) { %>
+            <li><strong>Size:</strong> <%= product.size %></li>
+            <% } %> <% if (product.material) { %>
+            <li><strong>Material:</strong> <%= product.material %></li>
+            <% } %>
+          </ul>
+
+          <!-- Add to Cart Button -->
+          <div class="mt-auto">
+            <a
+              href="/addtocart/<%= product._id %>"
+              class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 rounded-lg font-semibold transition"
+            >
+              Add to Cart
+            </a>
+          </div>
         </div>
       </div>
       <% }) %>
