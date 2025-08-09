@@ -1,13 +1,13 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
-const config = require("config");
-const dbgr= require("debug")("development:Mongoose")
-mongoose
-  .connect(`${config.get("MONGODB_URI")}/scatch`)
-  .then(function () {
-    dbgr("MongoDB Connected");
-  })
-  .catch(function (err) {
-    dbgr(err);
-  });
+const dbgr = require("debug")("development:Mongoose");
 
-  module.exports=mongoose.connection;
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => dbgr("MongoDB Connected"))
+  .catch((err) => dbgr("MongoDB Error:", err));
+
+module.exports = mongoose.connection;
