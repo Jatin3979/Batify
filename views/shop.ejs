@@ -1,4 +1,4 @@
-<%- include('./partials/header') %>
+<%- include('./partials/header',{name: fullname}) %>
 
 <!-- Alerts -->
 <% if (error && error.length > 0) { %>
@@ -19,29 +19,20 @@
 <div class="flex flex-col lg:flex-row w-full px-4 lg:px-20 pt-24 pb-10 gap-8">
   <!-- Sidebar -->
   <aside class="w-full lg:w-1/4">
-    <!-- Sort Dropdown -->
-    <div class="mb-8">
-      <form action="/shop" class="flex items-center gap-3">
-        <label for="sortby" class="font-semibold">Sort by</label>
-        <select
-          name="sortby"
-          id="sortby"
-          class="border px-3 py-2 rounded w-full lg:w-auto"
-        >
-          <option value="popular">Popular</option>
-          <option value="newest">Newest</option>
-        </select>
-      </form>
-    </div>
-
-    <!-- Removed Categories -->
-
     <!-- Filters -->
     <div>
       <h3 class="font-semibold mb-3">Filter by</h3>
       <ul class="space-y-2 text-sm text-gray-700">
-        <li><a href="#" class="hover:text-black">Availability</a></li>
-        <li><a href="#" class="hover:text-black">Discount</a></li>
+        <li>
+          <a href="/shop?material=English%20Willow" class="hover:text-black">
+            English Willow
+          </a>
+        </li>
+        <li>
+          <a href="/shop?material=Kashmiri%20Willow" class="hover:text-black">
+            Kashmiri Willow
+          </a>
+        </li>
       </ul>
     </div>
   </aside>
@@ -72,20 +63,29 @@
           </h3>
 
           <!-- Price & Discount -->
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-blue-600 font-semibold text-lg"
-              >₹ <%= product.price %></span
-            >
-            <% if (product.discount && product.discount > 0) { %>
-            <span class="text-sm text-gray-500 line-through"
-              >₹ <%= (product.price + (product.price * product.discount /
-              100)).toFixed(0) %></span
-            >
-            <span class="text-green-600 text-sm font-medium"
-              ><%= product.discount %>% off</span
-            >
-            <% } %>
-          </div>
+      <% 
+  // safe numeric conversion
+  const mrp = Number(product.price) || 0;
+  const disc = Number(product.discount) || 0;
+  const finalPrice = Math.max(0, mrp - disc); // never negative
+%>
+
+<div class="flex items-center gap-2 mb-2">
+  <% if (disc > 0) { %>
+    <!-- original MRP struck through -->
+    <span class="text-sm text-gray-500 line-through">₹ <%= mrp.toFixed(0) %></span>
+
+    <!-- discounted price -->
+    <span class="text-blue-600 font-semibold text-lg">₹ <%= finalPrice.toFixed(0) %></span>
+
+    <!-- show rupee saving -->
+    <span class="text-green-600 text-sm font-medium">Save ₹ <%= disc.toFixed(0) %></span>
+  <% } else { %>
+    <!-- no discount -->
+    <span class="text-blue-600 font-semibold text-lg">₹ <%= mrp.toFixed(0) %></span>
+  <% } %>
+</div>
+
 
           <!-- Short Description -->
           <% if (product.description) { %>

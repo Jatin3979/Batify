@@ -2,24 +2,36 @@
 
 <!-- Success Message -->
 <% if (success && success.length > 0) { %>
-  <div class="bg-green-500 text-white px-6 py-3 rounded shadow w-fit mx-auto mt-6 font-medium">
-    <%= success[0] %>
-  </div>
+<div
+  class="bg-green-500 text-white px-6 py-3 rounded shadow w-fit mx-auto mt-6 font-medium"
+>
+  <%= success[0] %>
+</div>
 <% } %>
 
 <div class="min-h-screen flex flex-col bg-gray-100">
   <div class="container mx-auto px-6 py-10 flex flex-col items-center">
-    
     <!-- Main Content -->
     <main class="w-full max-w-4xl bg-white rounded-lg shadow p-8">
-      <h2 class="text-2xl font-bold mb-6 border-b pb-3 text-gray-800">Create New Product</h2>
-      
-      <form autocomplete="off" action="/products/create" method="post" enctype="multipart/form-data" class="space-y-6">
-        
+      <h2 class="text-2xl font-bold mb-6 border-b pb-3 text-gray-800">
+        Create New Product
+      </h2>
+
+      <form
+        autocomplete="off"
+        action="/products/create"
+        method="post"
+        enctype="multipart/form-data"
+        class="space-y-6"
+      >
         <!-- Product Image -->
         <div>
-          <h3 class="text-lg font-semibold mb-3 text-gray-700">Product Details</h3>
-          <label class="block font-medium mb-2 text-gray-600">Product Image</label>
+          <h3 class="text-lg font-semibold mb-3 text-gray-700">
+            Product Details
+          </h3>
+          <label class="block font-medium mb-2 text-gray-600"
+            >Product Image</label
+          >
           <input
             name="image"
             type="file"
@@ -29,15 +41,76 @@
 
         <!-- Fields Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input name="name" type="text" placeholder="Product Name" class="border border-gray-300 p-2 rounded w-full" />
-          <input name="price" type="text" placeholder="Product Price" class="border border-gray-300 p-2 rounded w-full" />
-          <input name="discount" type="text" placeholder="Discount Price" class="border border-gray-300 p-2 rounded w-full" />
-          <input name="brand" type="text" placeholder="Brand (default:JK)" class="border border-gray-300 p-2 rounded w-full" />
-          <input name="category" type="text" placeholder="Category (deafult:Bat)" class="border border-gray-300 p-2 rounded w-full" />
-          <input name="material" type="text" placeholder="Material (e.g. English Willow)" class="border border-gray-300 p-2 rounded w-full" />
-          <input name="size" type="text" placeholder="Size (e.g. Full Size)" class="border border-gray-300 p-2 rounded w-full" />
-          <input name="weight" type="text" placeholder="Weight (e.g. 900g)" class="border border-gray-300 p-2 rounded w-full" />
-          <input name="stock" type="number" placeholder="Stock Quantity" class="border border-gray-300 p-2 rounded w-full" />
+          <input
+            name="name"
+            type="text"
+            placeholder="Product Name"
+            class="border border-gray-300 p-2 rounded w-full"
+          />
+          <input
+            name="price"
+            type="text"
+            placeholder="Product Price"
+            class="border border-gray-300 p-2 rounded w-full"
+          />
+          <input
+            name="discount"
+            type="text"
+            placeholder="Discount (₹)"
+            class="border border-gray-300 p-2 rounded w-full"
+          />
+
+          <!-- Brand -->
+          <input
+            name="brand"
+            type="text"
+            value="JK"
+            placeholder="Brand"
+            class="border border-gray-300 p-2 rounded w-full"
+          />
+
+          <!-- Category Dropdown -->
+          <select
+            name="category"
+            class="border border-gray-300 p-2 rounded w-full"
+          >
+            <option value="Tennis Bat">Tennis Bat</option>
+            <option value="Seasonal Bat">Seasonal Bat</option>
+            <option value="Plastic Bat">Plastic Bat</option>
+          </select>
+
+          <!-- Material Dropdown -->
+          <select
+            name="material"
+            class="border border-gray-300 p-2 rounded w-full"
+          >
+            <option value="Kashmiri Willow">Kashmiri Willow</option>
+            <option value="English Willow">English Willow</option>
+            <option value="Fibre">Fibre</option>
+          </select>
+
+          <!-- Size Dropdown -->
+          <select name="size" class="border border-gray-300 p-2 rounded w-full">
+            <option value="Full">Full</option>
+            <option value="Medium">Medium</option>
+            <option value="Short">Short</option>
+          </select>
+
+          <input
+            name="weight"
+            type="text"
+            placeholder="Weight (e.g. 900g)"
+            class="border border-gray-300 p-2 rounded w-full"
+          />
+
+          <!-- Stock default to 1 -->
+          <input
+            name="stock"
+            type="number"
+            value="1"
+            min="1"
+            class="border border-gray-300 p-2 rounded w-full"
+          />
         </div>
 
         <!-- Description -->

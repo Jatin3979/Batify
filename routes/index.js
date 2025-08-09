@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const isloggedin = require("../middlewares/isloggedin");
-const { shop, addtocart, cart } = require("../controllers/indexController");
+const { shop, addtocart, cart, removecart } = require("../controllers/indexController");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -13,4 +13,7 @@ router.get("/shop", isloggedin, shop);
 router.get("/addtocart/:id", isloggedin, addtocart);
 
 router.get("/cart", isloggedin,cart);
+
+router.post("/cart/remove/:id", isloggedin,removecart);
 module.exports = router;
+

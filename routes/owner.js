@@ -1,5 +1,3 @@
-const ownerValidationSchema = require("../validations/owner.validation");
-const ownerModel = require("../models/owner-model");
 var express = require("express");
 const { createProducts } = require("../controllers/ownerController");
 const { isAdmin } = require("../middlewares/isAdmin");

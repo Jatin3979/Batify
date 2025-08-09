@@ -11,7 +11,7 @@ module.exports.registerUser = async function (req, res) {
       return res.status(400).json({ message: error.details[0].message });
     let { fullname, password, email } = req.body;
     let user = await userModel.find({ email });
-    console.log(user);
+    // console.log(user);
     if (user.length > 0) return res.send("You alreday have an account");
     bcrypt.genSalt(10, function (err, salt) {
       bcrypt.hash(password, salt, async function (err, hash) {
@@ -24,7 +24,7 @@ module.exports.registerUser = async function (req, res) {
           });
           let token = generateToken(users);
           res.cookie("token", token);
-          res.send("succefulty done");
+          res.redirect("/shop");
         }
       });
     });
@@ -37,7 +37,7 @@ module.exports.loginUser = async (req, res) => {
   let { email, password } = req.body;
   // console.log(email)
   let user = await userModel.findOne({ email });
-  console.log(user);
+  // console.log(user);
   if (!user) {
     req.flash("error", "Wrong Credentials!!");
     return res.redirect("/");
