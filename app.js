@@ -65,4 +65,10 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
+// Auto-create admin on first deploy
+if (process.env.NODE_ENV === "production") {
+  require("./createadmin");
+}
+
+
 module.exports = app;
