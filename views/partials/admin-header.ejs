@@ -8,22 +8,39 @@
   </head>
   <body class="bg-gray-100">
     <!-- Admin Header -->
-    <header
-      class="bg-gray-800 text-white px-6 py-4 flex items-center justify-between shadow"
-    >
+    <header class="bg-gray-800 text-white px-6 py-4 flex items-center justify-between shadow relative">
       <!-- Left: Title -->
-      <h1
-        class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent flex items-center gap-2"
-      >
+      <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent flex items-center gap-2">
         Welcome, <span class="text-white drop-shadow">Mr. Jatin 😊</span>
       </h1>
 
-      <!-- Right: Navigation -->
-      <nav class="flex items-center gap-4">
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-4">
         <a href="/owners" class="hover:underline">Dashboard</a>
         <a href="/owners/products" class="hover:underline">Create Products</a>
         <a href="/" class="hover:underline text-red-400">Exit to Shop</a>
       </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-2xl focus:outline-none">
+        ☰
+      </button>
     </header>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div id="mobile-menu" class="absolute top-[64px] left-0 w-full bg-gray-800 text-white flex-col hidden md:hidden">
+      <a href="/owners" class="block px-6 py-3 hover:bg-gray-700">Dashboard</a>
+      <a href="/owners/products" class="block px-6 py-3 hover:bg-gray-700">Create Products</a>
+      <a href="/" class="block px-6 py-3 hover:bg-red-700 text-red-300">Exit to Shop</a>
+    </div>
+
+    <script>
+      const menuBtn = document.getElementById("menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    </script>
   </body>
 </html>
