@@ -66,9 +66,13 @@ app.use(function (err, req, res, next) {
 });
 
 // Auto-create admin on first deploy
-if (process.env.NODE_ENV === "production") {
-  require("./createadmin");
-}
+db.once("open", async () => {
+  console.log("✅ Database connected");
+  if (process.env.NODE_ENV === "production") {
+    await require("./createadmin")();
+  }
+});
+
 
 
 module.exports = app;
