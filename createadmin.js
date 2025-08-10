@@ -22,8 +22,9 @@ require("dotenv").config(); // Loads .env variables
     // 3. Check if admin already exists
     const existing = await userModel.findOne({ email: adminEmail });
     if (existing) {
-      console.log("⚠️ Admin already exists.");
-      process.exit(0);
+      console.log("✅ Admin already exists, skipping creation.");
+      mongoose.connection.close();
+      return;
     }
 
     // 4. Hash password
@@ -39,7 +40,6 @@ require("dotenv").config(); // Loads .env variables
 
     console.log("🎉 Admin created successfully:", admin);
     process.exit(0);
-
   } catch (err) {
     console.error("❌ Error creating admin:", err);
     process.exit(1);
