@@ -1,10 +1,3 @@
-Got it ✅
-I’ll prepare a **professional, detailed `README.md`** for your **Batify** project that you can directly put in your GitHub repo.
-It will be **developer-friendly**, have **clear installation steps**, **screenshots placeholders**, and make it **look like a polished production-ready project**.
-
----
-
-```markdown
 # 🏏 Batify - Cricket Bat E-Commerce Platform
 
 **Batify** is a **full-stack e-commerce web application** built using the **MERN stack** with **Razorpay payment integration**.  
@@ -52,7 +45,7 @@ It is designed exclusively for selling cricket bats, featuring **secure authenti
 ---
 
 ## 📂 Project Structure
-```
+
 
 Batify/
 │
@@ -65,7 +58,7 @@ Batify/
 ├── app.js                # Main Express app
 └── package.json
 
-````
+
 
 ---
 
