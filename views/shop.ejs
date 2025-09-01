@@ -38,16 +38,15 @@
   </aside>
 
   <!-- Product Grid -->
-  <main class="w-full lg:w-3/4">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-      <% products.forEach(function(product) { %>
-      <div
-        class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1 flex flex-col"
-      >
+  <!-- Product Grid -->
+<!-- Product Grid -->
+<main class="w-full lg:w-3/4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    <% products.forEach(function(product) { %>
+      <!-- Product Card -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1 flex flex-col">
         <!-- Product Image -->
-        <div
-          class="h-60 bg-gray-100 flex items-center justify-center overflow-hidden"
-        >
+        <div class="h-60 bg-gray-100 flex items-center justify-center overflow-hidden">
           <img
             src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
             alt="<%= product.name %>"
@@ -57,55 +56,43 @@
 
         <!-- Product Info -->
         <div class="p-4 flex flex-col flex-grow">
-          <!-- Name -->
-          <h3 class="font-bold text-lg text-gray-800 mb-1">
-            <%= product.name %>
-          </h3>
+          <h3 class="font-bold text-lg text-gray-800 mb-1"><%= product.name %></h3>
 
           <!-- Price & Discount -->
-      <% 
-  // safe numeric conversion
-  const mrp = Number(product.price) || 0;
-  const disc = Number(product.discount) || 0;
-  const finalPrice = Math.max(0, mrp - disc); // never negative
-%>
-
-<div class="flex items-center gap-2 mb-2">
-  <% if (disc > 0) { %>
-    <!-- original MRP struck through -->
-    <span class="text-sm text-gray-500 line-through">₹ <%= mrp.toFixed(0) %></span>
-
-    <!-- discounted price -->
-    <span class="text-blue-600 font-semibold text-lg">₹ <%= finalPrice.toFixed(0) %></span>
-
-    <!-- show rupee saving -->
-    <span class="text-green-600 text-sm font-medium">Save ₹ <%= disc.toFixed(0) %></span>
-  <% } else { %>
-    <!-- no discount -->
-    <span class="text-blue-600 font-semibold text-lg">₹ <%= mrp.toFixed(0) %></span>
-  <% } %>
-</div>
-
+          <% 
+            const mrp = Number(product.price) || 0;
+            const disc = Number(product.discount) || 0;
+            const finalPrice = Math.max(0, mrp - disc);
+          %>
+          <div class="flex items-center gap-2 mb-2">
+            <% if (disc > 0) { %>
+              <span class="text-sm text-gray-500 line-through">₹ <%= mrp.toFixed(0) %></span>
+              <span class="text-blue-600 font-semibold text-lg">₹ <%= finalPrice.toFixed(0) %></span>
+              <span class="text-green-600 text-sm font-medium">Save ₹ <%= disc.toFixed(0) %></span>
+            <% } else { %>
+              <span class="text-blue-600 font-semibold text-lg">₹ <%= mrp.toFixed(0) %></span>
+            <% } %>
+          </div>
 
           <!-- Short Description -->
           <% if (product.description) { %>
-          <p class="text-sm text-gray-600 mb-3 line-clamp-2">
-            <%= product.description %>
-          </p>
+            <p class="text-sm text-gray-600 mb-3 line-clamp-2"><%= product.description %></p>
           <% } %>
 
           <!-- Key Details -->
           <ul class="text-xs text-gray-500 space-y-1 mb-4">
             <% if (product.weight) { %>
-            <li><strong>Weight:</strong> <%= product.weight %> g</li>
-            <% } %> <% if (product.size) { %>
-            <li><strong>Size:</strong> <%= product.size %></li>
-            <% } %> <% if (product.material) { %>
-            <li><strong>Material:</strong> <%= product.material %></li>
+              <li><strong>Weight:</strong> <%= product.weight %> g</li>
+            <% } %>
+            <% if (product.size) { %>
+              <li><strong>Size:</strong> <%= product.size %></li>
+            <% } %>
+            <% if (product.material) { %>
+              <li><strong>Material:</strong> <%= product.material %></li>
             <% } %>
           </ul>
 
-          <!-- Add to Cart Button -->
+          <!-- Add to Cart -->
           <div class="mt-auto">
             <a
               href="/addtocart/<%= product._id %>"
@@ -116,9 +103,27 @@
           </div>
         </div>
       </div>
-      <% }) %>
-    </div>
-  </main>
+    <% }) %>
+  </div>
+</main>
+
+<!-- Floating Go to Cart Button -->
+<% if (user && user.cart && user.cart.length > 0) { %>
+  <div class="fixed bottom-5 right-5 z-50">
+    <a
+      href="/cart"
+      class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition"
+    >
+      🛒 Go to Cart 
+      <span class="bg-white text-emerald-700 font-bold text-sm px-2 py-0.5 rounded-full">
+        <%= user.cart.length %>
+      </span>
+    </a>
+  </div>
+<% } %>
+
+
+
 </div>
 
 <%- include('./partials/footer') %>

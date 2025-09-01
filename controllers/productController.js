@@ -18,7 +18,7 @@ module.exports.createProduct=async (req, res) => {
       description
     });
 
-    req.flash("success", "successfully created");
+    req.flash("success", "products successfully created");
     res.redirect("/owners/products");
   } catch (error) {
     console.error(error);

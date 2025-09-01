@@ -3,8 +3,8 @@ const productModel = require("../models/product-model");
 const userModel = require("../models/user-model");
 
 module.exports.createProducts = (req, res) => {
-  let success = req.flash("success");
-  res.render("createproducts", { success });
+  // let success = req.flash("success");
+  res.render("createproducts");
 };
 module.exports.dashboard = async (req, res) => {
   try {
@@ -28,6 +28,13 @@ module.exports.dashboard = async (req, res) => {
 
 module.exports.adminProducts = async function (req, res) {
   const products = await productModel.find();
-  console.log(products);
+  // console.log(products);
   res.render("adminproducts", { products });
+
 };
+
+module.exports.deleteProduct= async function(req,res){
+  const deletedProduct = await productModel.findByIdAndDelete({_id:req.params.id});
+  req.flash("success", "Product deleted successfully ✅");
+  res.redirect("/owners/allproducts");
+}

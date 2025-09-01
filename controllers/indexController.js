@@ -6,10 +6,11 @@ module.exports.shop = async function (req, res, next) {
   let success = req.flash("success");
   let { fullname } = req.user;
   let { material } = req.query;
+  let user= await userModel.findOne({email: req.user.email});
   let filter = {};
   if (material) filter.material = material;
   let products = await productModel.find(filter);
-  res.render("shop", { products, fullname, success });
+  res.render("shop", { products, fullname, success ,user });
 };
 
 module.exports.addtocart = async function (req, res, next) {
